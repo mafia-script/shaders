@@ -1,0 +1,59 @@
+-- =========================================================================
+-- 4K PASTEL NEON SHADER FOR PHILIPPINES RESTAURANT TYCOON
+-- =========================================================================
+
+local Lighting = game:GetService("Lighting")
+local Workspace = game:GetService("Workspace")
+
+pcall(function()
+	Lighting.Technology = Enum.Technology.Future -- Pinakamataas na graphics para sa anino ng kaldero at kalan
+end)
+Lighting.GlobalShadows = true
+
+-- 1. Oras at Silaw (Maagang Bukang-Liwayway para sa malaking sikat)
+Lighting.ClockTime = 6.4
+Lighting.Brightness = 4.0
+Lighting.ExposureCompensation = 0.4
+Lighting.ShadowSoftness = 0.0                          -- Crisp 4K shadows para sa bawat customer at lamesa
+
+-- 2. Kulay ng Kapaligiran (Vibrant Pink & Purple Vibe)
+Lighting.Ambient = Color3.fromRGB(85, 65, 105)          -- Lilang anino
+Lighting.OutdoorAmbient = Color3.fromRGB(140, 100, 170)
+Lighting.ColorShift_Top = Color3.fromRGB(255, 175, 215) -- Pinkish highlights kapag tinamaan ng araw ang karinderya mo
+Lighting.EnvironmentDiffuseScale = 1.0
+Lighting.EnvironmentSpecularScale = 1.0                -- Makintab na sahig kapag bagong lampaso
+
+-- 3. ColorCorrection (Ang Joevan High-Saturation Filter)
+local colorCorrection = Lighting:FindFirstChildOfClass("ColorCorrectionEffect") or Instance.new("ColorCorrectionEffect")
+colorCorrection.Brightness = 0.05
+colorCorrection.Contrast = 0.32                        
+colorCorrection.Saturation = 0.60                      -- Sobrang matingkad para mabuhay ang kulay ng laro
+colorCorrection.TintColor = Color3.fromRGB(255, 215, 255)
+colorCorrection.Parent = Lighting
+
+-- 4. Bloom & Glow (Para sa dambuhalang sikat ng araw sa screen)
+local bloom = Lighting:FindFirstChildOfClass("BloomEffect") or Instance.new("BloomEffect")
+bloom.Intensity = 1.6
+bloom.Size = 40
+bloom.Threshold = 0.4
+bloom.Parent = Lighting
+
+-- 5. Atmosphere (Pastel Air Quality)
+local atmosphere = Lighting:FindFirstChildOfClass("Atmosphere") or Instance.new("Atmosphere")
+atmosphere.Density = 0.28
+atmosphere.Offset = 0.2
+atmosphere.Color = Color3.fromRGB(255, 130, 190)       -- Rosas na hamog sa paligid ng kalsada
+atmosphere.Decay = Color3.fromRGB(110, 60, 140)
+atmosphere.Glare = 0.75
+atmosphere.Haze = 1.8
+atmosphere.Parent = Lighting
+
+-- 6. Siguraduhing may anino ang lahat ng lamesa, upuan, at pader
+for _, object in pairs(Workspace:GetDescendants()) do
+	if object:IsA("BasePart") or object:IsA("MeshPart") then
+		object.CastShadow = true
+	end
+end
+
+print("[SYSTEM]: 4K Dreamy Karinderya Lighting Settings Loaded!")
+
